@@ -4,15 +4,23 @@
 <head>
     <title>catalogue produits</title>
     <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/css/style.css" >
+    <script type="text/javascript">
+        function confirmer(url){
+            let rep = confirm("Êtes vous sûr de vouloir supprimer ?");
+            if(rep==true){
+                document.location = url;
+            }
+        }
+    </script>
 </head>
 <body>
 <div>
-    <form action="/gproduits_war_exploded/catalogue" method="post">
+    <form action="catalogue" method="post">
         <table>
             <tr>
                 <td>Mot Clé:  </td>
                 <td> <input type="text" name="motCle" value="${model.motCle}"/></td>
-                <td><input type="submit" name="action" value="chercher" /> </td>
+                <td><input type="submit" name="action" value="find" /> </td>
             </tr>
         </table>
     </form>
@@ -28,7 +36,7 @@
                 <td>${p.designation}</td>
                 <td>${p.prix}</td>
                 <td>${p.quantite}</td>
-                <td><a href="catalogue?action=delete&ref=${p.reference}"> Supprimer</a></td>
+                <td><a href="javascript:confirmer('catalogue?action=delete&ref=${p.reference}')"> Supprimer</a></td>
             </tr>
         </c:forEach>
     </table>

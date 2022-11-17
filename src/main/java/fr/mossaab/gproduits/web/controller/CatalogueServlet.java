@@ -24,17 +24,26 @@ public class CatalogueServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("catalogue.jsp").forward(req,resp);
+        doPost(req,resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        cs = new CatalogueServiceImpl();
+        String action = req.getParameter("action");
         CatalogueModel model = new CatalogueModel();
-        model.setMotCle(req.getParameter("motCle"));
-        List<Produit> produits = cs.produitsParMC(model.getMotCle());
-        model.setProduits(produits);
         req.setAttribute("model",model);
+        if (action!=null) {
+            if (action.equals("find")) {
+                model.setMotCle(req.getParameter("motCle"));
+                List<Produit> produits = cs.produitsParMC(model.getMotCle());
+                model.setProduits(produits);
+            }else if(action.equals("delete")){
+                String ref = req.getParameter("ref");
+                cs.deleteProduit(ref);
+                model.setProduits(cs.listeProduits());
+            }
+        }
+
         req.getRequestDispatcher("catalogue.jsp").forward(req,resp);
     }
 }
