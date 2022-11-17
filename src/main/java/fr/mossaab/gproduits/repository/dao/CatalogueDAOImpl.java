@@ -78,7 +78,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
         try {
             Connection connnection = DatabaseConnection.getConnection();
             PreparedStatement pr = connnection.prepareStatement("SELECT * FROM  produit WHERE ref_prod = ?");
-            pr.setString(1 , "%"+ref+"%");
+            pr.setString(1 , ref);
             ResultSet rs = pr.executeQuery();
             if (rs.next()) {
                 p = new Produit();
