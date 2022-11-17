@@ -17,7 +17,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
             PreparedStatement pr = connnection.prepareStatement("INSERT INTO  produit (ref_prod,designation,prix,quantite)  values (?,?,?,?) ");
             pr.setString(1, p.getReference());
             pr.setString(2, p.getDesignation());
-            pr.setInt(3, p.getPrix());
+            pr.setDouble(3, p.getPrix());
             pr.setInt(4, p.getQuantite());
             pr.executeUpdate();  // pour la modification de la bdd on utilise executeUpdate(), et executeQuery() pour la lecture
             pr.close();
@@ -37,7 +37,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
                 Produit p=new Produit();
                 p.setReference(rs.getString("REF_PROD"));
                 p.setDesignation(rs.getString("DESIGNATION"));
-                p.setPrix(rs.getInt("PRIX"));
+                p.setPrix(rs.getDouble("PRIX"));
                 p.setQuantite(rs.getInt("QUANTITE"));
                 prods.add(p);
             }
@@ -61,7 +61,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
                 Produit p=new Produit();
                 p.setReference(rs.getString("REF_PROD"));
                 p.setDesignation(rs.getString("DESIGNATION"));
-                p.setPrix(rs.getInt("PRIX"));
+                p.setPrix(rs.getDouble("PRIX"));
                 p.setQuantite(rs.getInt("QUANTITE"));
                 prodsParMc.add(p);
             }
@@ -84,7 +84,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
                 p = new Produit();
                 p.setReference(rs.getString("ref_prod"));
                 p.setDesignation(rs.getString("de"));
-                p.setPrix(rs.getInt("PRIX"));
+                p.setPrix(rs.getDouble("PRIX"));
                 p.setQuantite(rs.getInt("QUANTITE"));
             }
             pr.close();
@@ -101,7 +101,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
             Connection connnection = DatabaseConnection.getConnection();
             PreparedStatement pr = connnection.prepareStatement("UPDATE produit set designation = ? , prix= ? , quantite= ? where ref_prod=?");
             pr.setString(1, p.getDesignation());
-            pr.setInt(2, p.getPrix());
+            pr.setDouble(2, p.getPrix());
             pr.setInt(3, p.getQuantite());
             pr.setString(4, p.getReference());
             pr.executeUpdate();

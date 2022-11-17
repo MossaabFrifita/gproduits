@@ -11,7 +11,7 @@ public class Produit implements Serializable {
 
     private String reference;
     private String designation;
-    private int prix;
+    private Double prix;
     private int quantite;
 
 }
