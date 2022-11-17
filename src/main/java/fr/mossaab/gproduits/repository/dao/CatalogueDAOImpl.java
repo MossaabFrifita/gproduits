@@ -14,7 +14,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
     public void addProduit(Produit p) {
         Connection connnection = DatabaseConnection.getConnection();
         try {
-            PreparedStatement pr = connnection.prepareStatement("INSERT INTO  produit (REF_PROD,DESIGNATION,PRIX,QUANTITE)  values (?,?,?,?) ");
+            PreparedStatement pr = connnection.prepareStatement("INSERT INTO  produit (ref_prod,designation,prix,quantite)  values (?,?,?,?) ");
             pr.setString(1, p.getReference());
             pr.setString(2, p.getDesignation());
             pr.setInt(3, p.getPrix());
@@ -54,7 +54,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
 
         try {
             Connection connnection = DatabaseConnection.getConnection();
-            PreparedStatement pr = connnection.prepareStatement("SELECT * FROM  produit WHERE DESIGNATION like ?");
+            PreparedStatement pr = connnection.prepareStatement("SELECT * FROM  produit WHERE designation like ?");
             pr.setString(1 , "%"+mc+"%");
             ResultSet rs = pr.executeQuery();
             while (rs.next()) {
@@ -74,15 +74,16 @@ public class CatalogueDAOImpl implements CatalogueDAO{
 
     @Override
     public Produit getProduit(String ref) {
-        Produit p=new Produit();
+        Produit p= null;
         try {
             Connection connnection = DatabaseConnection.getConnection();
-            PreparedStatement pr = connnection.prepareStatement("SELECT * FROM  produit WHERE REF_PROD = ?");
+            PreparedStatement pr = connnection.prepareStatement("SELECT * FROM  produit WHERE ref_prod = ?");
             pr.setString(1 , "%"+ref+"%");
             ResultSet rs = pr.executeQuery();
             if (rs.next()) {
-                p.setReference(rs.getString("REF_PROD"));
-                p.setDesignation(rs.getString("DESIGNATION"));
+                p = new Produit();
+                p.setReference(rs.getString("ref_prod"));
+                p.setDesignation(rs.getString("de"));
                 p.setPrix(rs.getInt("PRIX"));
                 p.setQuantite(rs.getInt("QUANTITE"));
             }
@@ -90,6 +91,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (p == null) throw new RuntimeException("Produit "+ref +" introuvable");
         return p;
     }
 
@@ -97,7 +99,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
     public void updateProduit(Produit p) {
         try {
             Connection connnection = DatabaseConnection.getConnection();
-            PreparedStatement pr = connnection.prepareStatement("UPDATE produit set DESIGNATION = ? , PRIX= ? , QUANTITE= ? where REF_PROD=?");
+            PreparedStatement pr = connnection.prepareStatement("UPDATE produit set designation = ? , prix= ? , quantite= ? where ref_prod=?");
             pr.setString(1, p.getDesignation());
             pr.setInt(2, p.getPrix());
             pr.setInt(3, p.getQuantite());
@@ -113,7 +115,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
     public void deleteProduit(String ref)  {
         try {
             Connection connnection = DatabaseConnection.getConnection();
-            PreparedStatement pr = connnection.prepareStatement(" DELETE FROM produit WHERE REF_PROD= ?");
+            PreparedStatement pr = connnection.prepareStatement(" DELETE FROM produit WHERE ref_prod= ?");
             pr.setString(1,ref);
             pr.executeUpdate();
             pr.close();
