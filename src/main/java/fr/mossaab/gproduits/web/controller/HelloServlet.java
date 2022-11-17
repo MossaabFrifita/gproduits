@@ -1,4 +1,4 @@
-package fr.mossaab.gproduits.controller;
+package fr.mossaab.gproduits.web.controller;
 
 import java.io.*;
 
