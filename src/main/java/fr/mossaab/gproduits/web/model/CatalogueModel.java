@@ -10,6 +10,7 @@ public class CatalogueModel {
     private String motCle;
     private List<Produit> produits = new ArrayList<Produit>();
     private Produit produit = new Produit();
-    private String action="";   //attribut pour savoir l action a invoquer
-    private String saveORediter="save";
+    private String action="";
+    private String mode="save";
+    private String errors;
 }

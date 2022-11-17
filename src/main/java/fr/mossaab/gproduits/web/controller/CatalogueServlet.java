@@ -42,11 +42,27 @@ public class CatalogueServlet extends HttpServlet {
                 cs.deleteProduit(ref);
                 model.setProduits(cs.listeProduits());
             }else if(action.equals("save")){
-                model.getProduit().setReference(req.getParameter("reference"));
-                model.getProduit().setDesignation(req.getParameter("designation"));
-                model.getProduit().setPrix(Double.parseDouble(req.getParameter("prix")));
-                model.getProduit().setQuantite(Integer.parseInt(req.getParameter("quantite")));
-                cs.addProduit(model.getProduit());
+                try {
+                    model.getProduit().setReference(req.getParameter("reference"));
+                    model.getProduit().setDesignation(req.getParameter("designation"));
+                    model.getProduit().setPrix(Double.parseDouble(req.getParameter("prix")));
+                    model.getProduit().setQuantite(Integer.parseInt(req.getParameter("quantite")));
+                    model.setMode(req.getParameter("mode"));
+                    if(model.getMode().equals("edit")){
+                        cs.updateProduit(model.getProduit());
+                    }else if(model.getMode().equals("save")){
+                        cs.addProduit(model.getProduit());
+                    }
+
+                    model.setProduits(cs.listeProduits());
+                }catch (Exception e){
+                    model.setErrors(e.getMessage());
+                }
+            }else if(action.equals("edit")){
+                String ref = req.getParameter("ref");
+                Produit p = cs.getProduit(ref);
+                model.setProduit(p);
+                model.setMode("edit");
                 model.setProduits(cs.listeProduits());
             }
         }

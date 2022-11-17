@@ -83,7 +83,7 @@ public class CatalogueDAOImpl implements CatalogueDAO{
             if (rs.next()) {
                 p = new Produit();
                 p.setReference(rs.getString("ref_prod"));
-                p.setDesignation(rs.getString("de"));
+                p.setDesignation(rs.getString("DESIGNATION"));
                 p.setPrix(rs.getDouble("PRIX"));
                 p.setQuantite(rs.getInt("QUANTITE"));
             }

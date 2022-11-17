@@ -28,33 +28,46 @@
 <div>
     <span>Ajouter un nouveau produit</span>
     <form action="catalogue" method="post">
+        <input type="hidden" value="${model.mode}" name="mode">
         <table>
-            <tr>
-                <td>Reference :  </td>
-                <td> <input type="text" name="reference"/></td>
-                <td></td>
-            </tr>
+            <c:if test="${model.mode=='save'}">
+                <tr>
+                    <td>Reference :  </td>
+                    <td> <input type="text" name="reference" value="${model.produit.reference}" /></td>
+                    <td></td>
+                </tr>
+            </c:if>
+            <c:if test="${model.mode=='edit'}">
+                <tr>
+                    <td>Reference :  </td>
+                    <td> ${model.produit.reference} <input type="hidden" name="reference" value="${model.produit.reference}" /></td>
+                    <td></td>
+                </tr>
+            </c:if>
             <tr>
                 <td>Designation :  </td>
-                <td> <input type="text" name="designation"/></td>
+                <td> <input type="text" name="designation" value="${model.produit.designation}"/></td>
                 <td></td>
             </tr>
             <tr>
                 <td>Prix :  </td>
-                <td> <input type="text" name="prix"/></td>
+                <td> <input type="text" name="prix" value="${model.produit.prix}"/></td>
                 <td></td>
             </tr>
             <tr>
                 <td>Quantite :  </td>
-                <td> <input type="text" name="quantite"/></td>
+                <td> <input type="text" name="quantite" value="${model.produit.quantite}"/></td>
                 <td></td>
             </tr>
             <tr>
-                <td><input type="submit" name="action" value="save" /> </td>
+                <td><input type="submit" name="action" value="save"  /> </td>
             </tr>
 
         </table>
     </form>
+    <span>
+        ${model.errors}
+    </span>
 </div>
 <div>
     <table class="styled-table">
@@ -68,6 +81,7 @@
                 <td>${p.prix}</td>
                 <td>${p.quantite}</td>
                 <td><a href="javascript:confirmer('catalogue?action=delete&ref=${p.reference}')"> Supprimer</a></td>
+                <td><a href="catalogue?action=edit&ref=${p.reference}" > Modifier</a></td>
             </tr>
         </c:forEach>
     </table>
