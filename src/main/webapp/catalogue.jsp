@@ -26,6 +26,37 @@
     </form>
 </div>
 <div>
+    <span>Ajouter un nouveau produit</span>
+    <form action="catalogue" method="post">
+        <table>
+            <tr>
+                <td>Reference :  </td>
+                <td> <input type="text" name="reference"/></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Designation :  </td>
+                <td> <input type="text" name="designation"/></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Prix :  </td>
+                <td> <input type="text" name="prix"/></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Quantite :  </td>
+                <td> <input type="text" name="quantite"/></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="action" value="save" /> </td>
+            </tr>
+
+        </table>
+    </form>
+</div>
+<div>
     <table class="styled-table">
         <tr>
             <th> REF </th><th> DES </th><th> PRIX </th><th> QUANTITE</th>

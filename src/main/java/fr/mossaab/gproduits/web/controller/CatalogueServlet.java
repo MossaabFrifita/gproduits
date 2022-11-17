@@ -41,6 +41,13 @@ public class CatalogueServlet extends HttpServlet {
                 String ref = req.getParameter("ref");
                 cs.deleteProduit(ref);
                 model.setProduits(cs.listeProduits());
+            }else if(action.equals("save")){
+                model.getProduit().setReference(req.getParameter("reference"));
+                model.getProduit().setDesignation(req.getParameter("designation"));
+                model.getProduit().setPrix(Double.parseDouble(req.getParameter("prix")));
+                model.getProduit().setQuantite(Integer.parseInt(req.getParameter("quantite")));
+                cs.addProduit(model.getProduit());
+                model.setProduits(cs.listeProduits());
             }
         }
 
