@@ -15,6 +15,7 @@ public class DatabaseConnection {
             String url = "jdbc:postgresql://localhost/db_gproduits";
             Properties props = new Properties();
             props.load(DatabaseConnection.class.getClassLoader().getResourceAsStream("database.properties"));
+            Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection(url,props);
             System.out.println("Connected to the database!");
         }
@@ -22,6 +23,8 @@ public class DatabaseConnection {
             e.printStackTrace();
             System.out.println("Failed to make connection!");
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
